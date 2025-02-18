@@ -17,6 +17,7 @@ From: ubuntu:20.04
         perl \
         wget \
         gzip \
+        unzip \
         tar \
         curl \
         build-essential

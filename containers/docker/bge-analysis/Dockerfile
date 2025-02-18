@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     perl \
     wget \
     gzip \
+    unzip \
     tar \
     curl \
     build-essential \
