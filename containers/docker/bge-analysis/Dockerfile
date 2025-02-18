@@ -39,4 +39,3 @@ RUN chmod +x /usr/local/bin/add_rs_to_pvar.pl \
 
 # Set PATH
 ENV PATH="/usr/local/bin:${PATH}"
-
