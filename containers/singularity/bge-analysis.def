@@ -23,10 +23,10 @@ From: ubuntu:20.04
     rm -rf /var/lib/apt/lists/*
 
     # Install PLINK 2
-    wget https://s3.amazonaws.com/plink2-assets/alpha3/plink2_linux_x86_64_20230819.zip
-    unzip plink2_linux_x86_64_20230819.zip
-    mv plink2 /usr/local/bin/
-    rm plink2_linux_x86_64_20230819.zip
+    wget https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_avx2_20250129.zip && \
+    unzip plink2_linux_avx2_20250129.zip && \
+    mv plink2 /usr/local/bin/ && \
+    rm plink2_linux_avx2_20250129.zip
 
     # Create directories
     mkdir -p /app
