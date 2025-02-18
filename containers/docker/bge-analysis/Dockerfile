@@ -1,8 +1,9 @@
 FROM ubuntu:20.04
 
+ARG GITHUB_REPO
 LABEL org.opencontainers.image.title="bge-analysis"
 LABEL org.opencontainers.image.description="Container for BGE genome analysis workflows"
-LABEL org.opencontainers.image.source="https://github.com/${{ github.repository }}"
+LABEL org.opencontainers.image.source="${GITHUB_REPO}"
 
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
