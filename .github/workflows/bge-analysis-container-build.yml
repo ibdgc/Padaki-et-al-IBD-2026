@@ -82,7 +82,14 @@ jobs:
 
       - name: Build Singularity image
         run: |
-          singularity build --fakeroot bge-analysis.sif containers/singularity/bge-analysis.def
+          # Install Singularity Remote Builder
+          pip install singularity-hpc
+      
+          # Configure remote builder
+          singularity remote login --tokenfile ${{ secrets.SYLABS_TOKEN }}
+      
+          # Build using remote builder
+          singularity build --remote bge-analysis.sif containers/singularity/bge-analysis.def
 
       - name: Push Singularity image to GHCR
         run: |
