@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 
 ARG GITHUB_REPO
-LABEL org.opencontainers.image.title="bge-analysis"
-LABEL org.opencontainers.image.description="Container for BGE genome analysis workflows"
+LABEL org.opencontainers.image.title="bge-cutler-qc"
+LABEL org.opencontainers.image.description="Container for BGE genome Cutler QC workflows"
 LABEL org.opencontainers.image.source="${GITHUB_REPO}"
 
 # Prevent interactive prompts during package installation
@@ -19,12 +19,16 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Install PLINK 1.9
+RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20241022.zip && \
+    unzip plink_linux_x86_64_20241022.zip && \
+    mv plink /usr/local/bin/plink1.9
+
 # Install PLINK 2
 RUN wget https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_avx2_20250129.zip && \
     unzip plink2_linux_avx2_20250129.zip && \
     mv plink2 /usr/local/bin/ && \
-    rm plink2_linux_avx2_20250129.zip
-
+    rm plink*.zip LICENSE README.txt
 
 # Create working directory
 WORKDIR /app
@@ -41,3 +45,4 @@ RUN chmod +x /usr/local/bin/add_rs_to_pvar.pl \
 
 # Set PATH
 ENV PATH="/usr/local/bin:${PATH}"
+
