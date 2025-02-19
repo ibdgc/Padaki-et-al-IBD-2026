@@ -83,21 +83,22 @@ jobs:
       - name: Configure Singularity OCI credentials
         run: |
           mkdir -p ~/.singularity/docker
-          echo "${{ secrets.CR_PA_TOKEN }}" | singularity registry login -u ${{ github.actor }} --password-stdin ghcr.io
-
+          singularity remote login --username ${{ github.actor }} --password ${{ secrets.CR_PA_TOKEN }} ghcr.io
+      
       - name: Build Singularity image from Docker
         run: |
           VERSION=$(git rev-parse --short HEAD)
           singularity build bge-cutler-qc.sif docker://${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:sha-${VERSION}
-
+      
       - name: Push Singularity image to GHCR
         run: |
           VERSION=$(git rev-parse --short HEAD)
-
+      
           # Push with specific version tag
           singularity push bge-cutler-qc.sif oras://${{ env.REGISTRY }}/${{ env.SINGULARITY_IMAGE_NAME }}:${VERSION}
-
+      
           # Push as latest if on main branch
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             singularity push bge-cutler-qc.sif oras://${{ env.REGISTRY }}/${{ env.SINGULARITY_IMAGE_NAME }}:latest
           fi
+      
