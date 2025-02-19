@@ -20,15 +20,21 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PLINK 1.9
-RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20241022.zip && \
+RUN cd /tmp && \
+    wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20241022.zip && \
     unzip plink_linux_x86_64_20241022.zip && \
-    mv plink /usr/local/bin/plink1.9
+    mv plink /usr/local/bin/plink1.9 && \
+    chmod +x /usr/local/bin/plink1.9 && \
+    rm -f /tmp/plink_linux_x86_64_20241022.zip && \
+    rm -f /tmp/LICENSE /tmp/README.txt
 
 # Install PLINK 2
-RUN wget https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_avx2_20250129.zip && \
+RUN cd /tmp && \
+    wget https://s3.amazonaws.com/plink2-assets/alpha6/plink2_linux_avx2_20250129.zip && \
     unzip plink2_linux_avx2_20250129.zip && \
     mv plink2 /usr/local/bin/ && \
-    rm plink*.zip LICENSE README.txt
+    chmod +x /usr/local/bin/plink2 && \
+    rm -f /tmp/plink2_linux_avx2_20250129.zip
 
 # Create working directory
 WORKDIR /app
